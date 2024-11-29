@@ -6,7 +6,7 @@
   "description": "Remembers position of cursor when opening inventory or storagecontainer",
   "authors": [ "VatinMC" ],
   "contact": {
-    "repo": "https://github.com/vatinmc/cursorAnchor"
+    "repo": "https://github.com/vatinmc/cursor-anchor"
   },
   "license": "All-Rights-Reserved",
   "icon": "assets/cursor-anchor/icon.png",
