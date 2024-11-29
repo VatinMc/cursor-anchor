@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "cursor-anchor",
+  "version": "${version}",
+  "name": "Cursor anchor",
+  "description": "Remembers position of cursor when opening inventory or storagecontainer",
+  "authors": [ "VatinMC" ],
+  "contact": {
+    "repo": "https://github.com/vatinmc/cursorAnchor"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/cursor-anchor/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "de.vatinmc.cursoranchor.client.CursorAnchorClient"
+    ]
+  },
+  "mixins": [
+    "cursor-anchor.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
