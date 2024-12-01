@@ -1,6 +1,7 @@
 package de.vatinmc.cursoranchor.mixin;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Mouse;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -20,7 +21,7 @@ import oshi.util.tuples.Pair;
 @Mixin(GenericContainerScreen.class)
 public abstract class GenericContainerScreenMixin extends HandledScreen<GenericContainerScreenHandler> implements ScreenHandlerProvider<GenericContainerScreenHandler> {
     @Unique
-    private static Pair<Integer, Integer> lastPos = new Pair<>(0,0);
+    private static Pair<Double, Double> lastPos = new Pair<>(-1.0,-1.0);
     @Unique
     private boolean firstFrame = true;
     public GenericContainerScreenMixin(GenericContainerScreenHandler handler, PlayerInventory inventory, Text title) {
@@ -30,15 +31,18 @@ public abstract class GenericContainerScreenMixin extends HandledScreen<GenericC
     @Inject(method = "render", at = @At("TAIL"))
     private void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo info){
         if(firstFrame){
-            if(!(lastPos.getA() == 0 && lastPos.getB() == 0)){
-                Window testWindow = MinecraftClient.getInstance().getWindow();
-                double scale = testWindow.getScaleFactor();
-                double relativeX = lastPos.getA() * scale;
-                double relativeY = lastPos.getB() * scale;
-                GLFW.glfwSetCursorPos(testWindow.getHandle(), relativeX, relativeY);
+            if(!(lastPos.getA() == -1.0 && lastPos.getB() == -1.0)){
+                Window mcWindow = MinecraftClient.getInstance().getWindow();
+                GLFW.glfwSetCursorPos(mcWindow.getHandle(), lastPos.getA(), lastPos.getB());
             }
             firstFrame = false;
         }
-        lastPos = new Pair<>(mouseX, mouseY);
+    }
+    @Override
+    public void close() {
+        Mouse mouse = MinecraftClient.getInstance().mouse;
+        lastPos = new Pair<>(mouse.getX(), mouse.getY());
+
+        super.close();
     }
 }
