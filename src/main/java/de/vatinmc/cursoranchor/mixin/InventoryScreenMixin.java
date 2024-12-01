@@ -16,23 +16,21 @@ import oshi.util.tuples.Pair;
 @Mixin(InventoryScreen.class)
 public abstract class InventoryScreenMixin implements RecipeBookProvider{
     @Unique
-    private static Pair<Integer, Integer> lastPos = new Pair<>(0,0);
-    @Unique
-    private boolean firstFrame = true;
+    private static Pair<Integer, Integer> lastPos = new Pair<>(-1,-1);
+
+    @Inject(method = "init", at = @At("HEAD"))
+    protected void init(CallbackInfo ci){
+        if(lastPos.getA() > 0 && lastPos.getB() > 0){
+            Window mcWindow = MinecraftClient.getInstance().getWindow();
+            double scale = mcWindow.getScaleFactor();
+            double relX = lastPos.getA() * scale;
+            double relY = lastPos.getB() * scale;
+            GLFW.glfwSetCursorPos(mcWindow.getHandle(), relX, relY);
+        }
+    }
 
     @Inject(method = "render", at = @At("TAIL"))
     private void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo info){
-        if(firstFrame){
-            if(!(lastPos.getA() == 0 && lastPos.getB() == 0)){
-                Window testWindow = MinecraftClient.getInstance().getWindow();
-                double scale = testWindow.getScaleFactor();
-                double relativeX = lastPos.getA() * scale;
-                double relativeY = lastPos.getB() * scale;
-                GLFW.glfwSetCursorPos(testWindow.getHandle(), relativeX, relativeY);
-            }
-            firstFrame = false;
-        }
         lastPos = new Pair<>(mouseX, mouseY);
     }
-
 }
