@@ -6,7 +6,6 @@ public enum HandledScreenType {
     BEACON,
     BREWINGSTAND,
     CARTOGRAPHYTABLE,
-    CRAFTER,
     CRAFTING,
     ENCHANTMENT,
     FORGING,
@@ -27,8 +26,6 @@ public enum HandledScreenType {
             return BREWINGSTAND;
         if(handler instanceof CartographyTableScreenHandler)
             return CARTOGRAPHYTABLE;
-        if(handler instanceof CrafterScreenHandler)
-            return CRAFTER;
         if(handler instanceof CraftingScreenHandler)
             return CRAFTING;
         if(handler instanceof EnchantmentScreenHandler)
