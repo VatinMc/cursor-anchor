@@ -1,8 +1,8 @@
 # cursor-anchor
 Minecraft Fabric Mod. Remembers position of cursor when opening inventory or storagecontainer.  
   
-Minecraft version 1.21  
-Fabric-API: 0.102.0+1.21  
+Minecraft version 1.21.1  
+Fabric-API: 0.110.0+1.21.1  
   
 Changelog:
 **v1.1.0**
