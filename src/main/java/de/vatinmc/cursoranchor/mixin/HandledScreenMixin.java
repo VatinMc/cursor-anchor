@@ -1,5 +1,6 @@
 package de.vatinmc.cursoranchor.mixin;
 
+import de.vatinmc.cursoranchor.config.CursorAnchorConfig;
 import de.vatinmc.cursoranchor.util.HandledScreenType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
@@ -35,12 +36,14 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
     protected void init(CallbackInfo ci){
         HandledScreenType type = HandledScreenType.getType(handler);
         if(!type.equals(HandledScreenType.ERROR)){
-            Window mcWindow = MinecraftClient.getInstance().getWindow();
-            Pair<Double, Double> lastPos = cursorPosScreens.getOrDefault(type, new Pair<>(-0.1,-0.1));
-            if((lastPos.getA() > 0 && lastPos.getB() > 0)){
-                GLFW.glfwSetCursorPos(mcWindow.getHandle(), lastPos.getA(), lastPos.getB());
-            } else {
-                cursorPosScreens.put(type, lastPos);
+            if(CursorAnchorConfig.options.get(type)){
+                Window mcWindow = MinecraftClient.getInstance().getWindow();
+                Pair<Double, Double> lastPos = cursorPosScreens.getOrDefault(type, new Pair<>(-0.1,-0.1));
+                if((lastPos.getA() > 0 && lastPos.getB() > 0)){
+                    GLFW.glfwSetCursorPos(mcWindow.getHandle(), lastPos.getA(), lastPos.getB());
+                } else {
+                    cursorPosScreens.put(type, lastPos);
+                }
             }
         }
     }
@@ -50,6 +53,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
         Mouse mouse = MinecraftClient.getInstance().mouse;
         HandledScreenType type = HandledScreenType.getType(handler);
         if(!type.equals(HandledScreenType.ERROR))
-            cursorPosScreens.replace(type, new Pair<>(mouse.getX(), mouse.getY()));
+            if(CursorAnchorConfig.options.get(type))
+                cursorPosScreens.replace(type, new Pair<>(mouse.getX(), mouse.getY()));
     }
 }

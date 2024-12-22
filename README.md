@@ -4,7 +4,16 @@ Minecraft Fabric Mod. Remembers position of cursor when opening inventory or sto
 Minecraft version 1.21.1  
 Fabric-API: 0.110.0+1.21.1  
   
-Changelog:
+![Config Screen to choose which inventory should remember cursor position](https://cdn.modrinth.com/data/Xzgu8wGs/images/ab7775f0a29b3bd4c255b9f9fa4ed693e81ead7c.png)
+
+  
+Changelog:  
+**1.2.0**  
+Added  
+- command ```/caconfig```
+- Config Screen to choose which inventory should remember cursor position
+- Mod Menu support
+
 **v1.1.0**
 Added support of various inventorys.
 - beacon
