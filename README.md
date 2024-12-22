@@ -9,6 +9,7 @@ Fabric-API: 0.110.0+1.21.1
   
 Changelog:  
 **1.2.0**  
+```Thanks to suggestions from TheHanfried```  
 Added  
 - command ```/caconfig```
 - Config Screen to choose which inventory should remember cursor position
