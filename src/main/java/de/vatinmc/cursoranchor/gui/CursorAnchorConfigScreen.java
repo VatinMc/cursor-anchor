@@ -6,6 +6,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -64,7 +65,7 @@ public class CursorAnchorConfigScreen extends Screen {
         context.fill(x1 + border, y1 + border, x2 - border,y2 - border,0xffffffff);//white
 
         net.minecraft.util.Identifier texture = Identifier.of("minecraft", "textures/block/deepslate.png");
-        context.drawTexture(texture, x1 +border,y1+border,0,0,x2-5-border*2,y2-5-border*2, 16, 16);
+        context.drawTexture(RenderLayer::getGuiTextured, texture, x1 +border,y1+border,0,0,x2-5-border*2,y2-5-border*2, 16, 16);
     }
 
     @Override
@@ -148,7 +149,7 @@ public class CursorAnchorConfigScreen extends Screen {
 
             ItemStack itemStack = HandledScreenType.getItemStack(screenType);
 
-            Text title = Text.translatable(itemStack.getTranslationKey());
+            Text title = Text.translatable(itemStack.getItem().getTranslationKey());
             if(screenType.equals(HandledScreenType.HORSE))
                 title = Text.translatable(EntityType.HORSE.getTranslationKey());
             else if(screenType.equals(HandledScreenType.MERCHANT))
@@ -165,7 +166,7 @@ public class CursorAnchorConfigScreen extends Screen {
                 context.drawItem(errorStack, leftStatus, top);
             } else {
                 Identifier textureCheck = Identifier.ofVanilla("textures/gui/sprites/icon/checkmark.png");
-                context.drawTexture(textureCheck, leftStatus, top + 4, 0,0,8,8,8,8);
+                context.drawTexture(RenderLayer::getGuiTextured, textureCheck,  leftStatus, top + 4, 0,0,8,8,8,8);
 
             }
             context.drawTextWithShadow(textRenderer, title, leftText, topText, colorText);
